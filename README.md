@@ -22,15 +22,39 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Parsing a json string safely.
 
-## Development
+```ruby
+irb> json_string = JSON.generate({abc: 123})
+=> "{\"abc\":123}"
+irb> SafeParse.call(json_string)
+=> {"abc"=>123}
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+Parsing an invalid json string will default to `{}`.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```ruby
+irb> invalid_json_string = "abc123"
+=> "abc123"
+irb> SafeParse.call(invalid_json_string)
+=> {}
+```
+
+SafeParse can take a default to return if the json parsing fails.
+
+```ruby
+irb> SafeParse.call(invalid_json_string, {abc: 123})
+=> {:abc=>123}
+```
+
+Safe parse can also take a ruby hash and it correctly.
+
+```ruby
+irb> SafeParse.call({ruby: "hash"})
+=> {:ruby=>"hash"}
+```
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/safe_parse. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/gogogarrett/safe_parse. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
